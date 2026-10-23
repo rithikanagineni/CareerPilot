@@ -2,72 +2,106 @@
 
 > **Turn career goals into your next best action.**
 
-CareerPilot is an AI-powered career agent for students and early-career developers. It is built for the **Alexa+ primary track** of the Amazon Developer Hackathon: Build, Ship, Shape 2026, using a self-hosted MCP server over Streamable HTTP.
+CareerPilot is an AI-powered career agent for students and early-career developers. It is built for the **Alexa+ primary track** of the Amazon Developer Hackathon: **Build, Ship, Shape 2026**, using a self-hosted MCP server over Streamable HTTP.
 
 ---
 
-## Overview
+## 🚀 Overview
 
-CareerPilot is NOT a generic job listing site or chatbot. It acts as an intelligent career agent:
+CareerPilot is **not** a generic job listing site or chatbot. It acts as an intelligent career agent that turns a user's career goal into a structured path forward.
 
-1. You tell CareerPilot your career goal (e.g., "I want an AI/ML internship in Hyderabad")
-2. It uses MCP-powered tools to search opportunities, calculate match scores, and identify skill gaps
-3. It creates a personalized action plan with today / 7-day / 30-day goals
-4. It prepares you for interviews with role-specific questions
+### How it works
+
+1. You tell CareerPilot your career goal.
+   - Example: *"I want an AI/ML internship in Hyderabad."*
+2. The Career Agent understands the intent and selects the appropriate MCP tools.
+3. MCP tools search opportunities, retrieve the candidate profile, calculate match scores, and identify skill gaps.
+4. CareerPilot explains **why** an opportunity matches and what the candidate is missing.
+5. It creates a personalized **today / 7-day / 30-day career action plan**.
+6. It generates role-specific interview preparation.
+
+The goal is simple:
+
+> **Discover → Match → Understand → Improve → Prepare**
 
 ---
 
-## Problem
+## 🎯 Problem
 
-Students and early-career developers face these challenges:
+Students and early-career developers often face:
+
 - Hundreds of generic job listings with no context about their fit
-- No clarity on *why* they don't qualify for roles
-- No structured path to become a better candidate
-- Interview preparation is scattered and not personalized
+- No clarity on **why** they qualify or don't qualify
+- Difficulty identifying the most important skill gaps
+- No structured path for improving their profile
+- Interview preparation that is scattered and not personalized
+
+CareerPilot addresses these problems by combining opportunity discovery, transparent matching, skill-gap analysis, career planning, and interview preparation into one agentic workflow.
 
 ---
 
-## Solution
+## 💡 Solution
 
 CareerPilot uses an AI agent that:
-- **Understands** the user's career goal in natural language
-- **Searches** matching opportunities using the MCP `search_opportunities` tool
-- **Analyzes** match quality using a transparent scoring formula
-- **Identifies** skill gaps with priority rankings and learning recommendations
-- **Creates** a structured career action plan
-- **Generates** role-specific interview preparation
+
+- **Understands** career goals expressed in natural language
+- **Retrieves** the candidate's profile and context
+- **Searches** matching opportunities using MCP tools
+- **Explains** match quality using a transparent scoring formula
+- **Identifies** skill gaps with priorities and learning recommendations
+- **Creates** a personalized career action plan
+- **Generates** role-specific technical and behavioral interview preparation
+
+Unlike a conventional chatbot, CareerPilot uses an agent workflow where the user's intent determines which tools are executed.
 
 ---
 
-## Key Features
+# ✨ Key Features
 
 - 🔌 **Real MCP Server** — Official `@modelcontextprotocol/sdk`, MCP 2025-11-25, and Streamable HTTP
-- ☁️ **Amazon Bedrock** — AI reasoning via Bedrock when AWS credentials and model access are configured
-- 🪂 **Explicit fallback mode** — Deterministic responses identify themselves as a demo fallback when Bedrock is not configured or unavailable
-- 🎯 **Career Agent** — Intent-based tool selection, not brute-force tool calling
-- 📊 **Transparent Match Scoring** — Documented scoring formula (see below)
+- ☁️ **Amazon Bedrock** — AI reasoning via Amazon Bedrock when AWS credentials and model access are configured
+- 🪂 **Explicit Fallback Mode** — Deterministic responses clearly identify when Bedrock is unavailable
+- 🎯 **Career Agent** — Intent-based tool selection instead of brute-force tool calling
+- 📊 **Transparent Match Scoring** — Explainable 100-point matching formula
 - 📋 **Personalized Career Plans** — Today / 7-day / 30-day action items
-- 🎤 **Interview Prep** — Role-specific technical and behavioral questions
-- 🎨 **Career illustration set** — Original local SVG artwork for matching, skills, planning, interviews, profiles, and more
-- 🔍 **22+ Opportunities** — Realistic demo dataset across 6 domains and 5 cities
-- 🎙️ **Voice Input** — Browser speech recognition (graceful fallback to text)
-- 🔐 **Career accounts** — Sign up with a detailed profile, sign in, and manage a local demo session
-
-### Local demo authentication
-
-The home page is public and offers login; dashboard, AI agent, opportunities, and profile routes require an active account session. Registration is a three-step flow that collects account, career, education, and skills details before opening the new user's dashboard.
-
-Accounts created locally are stored in the ignored `.careerpilot-auth.json` file in the project working directory. That file is generated only when the local app registers an account and must never be committed or included in a submission. Passwords are scrypt-hashed and session cookies are HTTP-only. This file-backed implementation is for a single-instance demo only: use a managed database and production authentication/session infrastructure before deploying for real users or running multiple app instances.
+- 🎤 **Interview Preparation** — Role-specific technical, behavioral, and project questions
+- 🎨 **Career Illustrations** — Local SVG artwork for matching, skills, planning, interviews, profiles, and more
+- 🔍 **22+ Opportunities** — Realistic demo opportunities across multiple domains and cities
+- 🎙️ **Voice Input** — Browser Speech Recognition with graceful text fallback
+- 🔐 **Career Accounts** — Local demo registration, login, profile, and session management
 
 ---
 
-## Architecture
+## 🔐 Local Demo Authentication
 
-```
+The home page is public and provides login/registration. Dashboard, AI Agent, Opportunities, and Profile routes require an active account session.
+
+Registration uses a three-step flow collecting:
+
+- Account information
+- Career information
+- Education
+- Skills and experience
+
+Accounts created locally are stored in the git-ignored `.careerpilot-auth.json` file in the project working directory.
+
+**Important security notes:**
+
+- `.careerpilot-auth.json` must never be committed or included in the hackathon submission.
+- Passwords are scrypt-hashed.
+- Session cookies are HTTP-only.
+- The file-backed implementation is intended only for a single-instance demonstration.
+- Production deployment should use managed database and authentication/session infrastructure.
+
+---
+
+# 🏗️ Architecture
+
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │                      Browser (User)                         │
 │                   CareerPilot Web UI                        │
-│           (Next.js + TypeScript + Tailwind)                 │
+│           Next.js + TypeScript + Tailwind CSS              │
 └──────────────────────────┬──────────────────────────────────┘
                            │ HTTP
                            ▼
@@ -76,123 +110,165 @@ Accounts created locally are stored in the ignored `.careerpilot-auth.json` file
 │  /api/agent  /api/mcp  /api/profile  /api/opportunities     │
 └──────────────────────────┬──────────────────────────────────┘
                            │
-           ┌───────────────┴──────────────────┐
-           │                                  │
-           ▼                                  ▼
-┌──────────────────────┐          ┌───────────────────────────┐
-│   Career Agent       │          │     AI Provider Layer     │
-│   lib/agent/         │          │     lib/ai/               │
-│   - Intent detection │          │   ┌─────────────────────┐ │
-│   - Tool selection   │          │   │  Amazon Bedrock      │ │
-│   - Context tracking │          │   │  (when configured)   │ │
-└──────────┬───────────┘          │   └─────────────────────┘ │
-           │                      │   ┌─────────────────────┐ │
-           │ MCP Streamable HTTP  │   │  Fallback Provider   │ │
-           ▼                      │   │  (demo mode)         │ │
-┌──────────────────────┐          │   └─────────────────────┘ │
-│   MCP Server         │          └───────────────────────────┘
-│   mcp/server.ts      │
-│   Port: 3001         │
-│   Protocol: 2025-11-25│
-│   Transport: HTTP    │
-├──────────────────────┤
-│   MCP Tools:         │
-│   get_candidate_profile│
-│   search_opportunities │
-│   analyze_match      │
-│   analyze_skill_gaps │
-│   create_career_plan │
-│   generate_interview_prep│
-└──────────┬───────────┘
+              ┌────────────┴────────────┐
+              │                         │
+              ▼                         ▼
+┌──────────────────────┐      ┌───────────────────────────┐
+│    Career Agent      │      │     AI Provider Layer    │
+│    lib/agent/        │      │     lib/ai/              │
+│                      │      │                           │
+│  • Intent detection  │      │  • Amazon Bedrock        │
+│  • Tool selection    │      │  • Fallback Provider     │
+│  • Context tracking  │      │                           │
+└──────────┬───────────┘      └───────────────────────────┘
            │
+           │ MCP Streamable HTTP
            ▼
-┌──────────────────────┐
-│  In-Memory Data      │
-│  lib/data/           │
-│  - 22 opportunities  │
-│  - 3 candidates      │
-└──────────────────────┘
+┌──────────────────────────────┐
+│         MCP Server           │
+│         mcp/server.ts        │
+│                              │
+│ Protocol: MCP 2025-11-25     │
+│ Transport: Streamable HTTP   │
+│ Port: 3001                   │
+│ Endpoint: POST /mcp          │
+│                              │
+│ MCP Tools:                   │
+│ • get_candidate_profile      │
+│ • search_opportunities       │
+│ • analyze_match              │
+│ • analyze_skill_gaps         │
+│ • create_career_plan         │
+│ • generate_interview_prep    │
+└──────────────┬───────────────┘
+               │
+               ▼
+┌──────────────────────────────┐
+│        Demo Data Layer       │
+│                              │
+│ • 22+ opportunities          │
+│ • 3 candidate profiles       │
+└──────────────────────────────┘
 ```
 
 ---
 
-## Alexa+ Primary Track
+# 🔌 Alexa+ Primary Track
 
-CareerPilot implements the Alexa+ primary track using a self-hosted MCP server. The Career Agent communicates with that server over Streamable HTTP and invokes registered tools in response to user intent.
+CareerPilot implements the **Alexa+ primary track** using a self-hosted MCP server.
 
-### MCP Server
+The Career Agent communicates with the MCP server over **Streamable HTTP** and invokes registered tools according to user intent.
 
-- **SDK**: Official `@modelcontextprotocol/sdk` v1.32.1
-- **Protocol version**: MCP 2025-11-25
-- **Transport**: **Streamable HTTP** via `StreamableHTTPServerTransport`
-- **Port**: 3001 by default (configurable via `MCP_PORT`)
-- **Endpoint**: `POST /mcp` on the self-hosted server
-- **Sessions**: The server creates an MCP session during `initialize`, reuses its transport for subsequent requests, and closes idle sessions.
+## MCP Server
+
+- **SDK:** Official `@modelcontextprotocol/sdk` v1.32.1
+- **Protocol:** MCP 2025-11-25
+- **Transport:** Streamable HTTP via `StreamableHTTPServerTransport`
+- **Port:** 3001 by default
+- **Endpoint:** `POST /mcp`
+- **Sessions:** MCP sessions are created during initialization and reused for subsequent requests
 
 ### MCP Endpoint
 
-```
+```text
 POST http://localhost:3001/mcp
 ```
 
-JSON-RPC 2.0 format, SSE/streaming response supported.
+The endpoint uses JSON-RPC 2.0 and supports streaming responses.
 
-### MCP Tools Registered
+---
+
+## 🧰 MCP Tools
 
 | Tool | Purpose |
-|------|---------|
-| `get_candidate_profile` | Retrieve candidate education, skills, projects, career goals |
-| `search_opportunities` | Search 22+ internships/jobs by role, location, skills |
-| `analyze_match` | Calculate match % using transparent scoring formula |
-| `analyze_skill_gaps` | Identify missing skills with priority and learning recommendations |
-| `create_career_plan` | Generate today/7-day/30-day personalized action plans |
-| `generate_interview_prep` | Role-specific technical, behavioral, and project questions |
+|---|---|
+| `get_candidate_profile` | Retrieve candidate education, skills, projects, and career goals |
+| `search_opportunities` | Search 22+ internships/jobs by role, location, and skills |
+| `analyze_match` | Calculate an explainable match percentage |
+| `analyze_skill_gaps` | Identify missing skills and learning recommendations |
+| `create_career_plan` | Generate personalized today/7-day/30-day plans |
+| `generate_interview_prep` | Generate role-specific technical, behavioral, and project questions |
 
-### How the Agent Uses MCP Tools
+---
 
-The Career Agent detects user intent and selects tools intelligently:
+## 🤖 Agentic Tool Selection
+
+CareerPilot does not blindly execute every available tool.
+
+The Career Agent detects intent and selects the appropriate MCP tools.
 
 | User Intent | Tools Called |
-|-------------|--------------|
+|---|---|
 | "Find AI internships in Hyderabad" | `get_candidate_profile` → `search_opportunities` → `analyze_skill_gaps` |
 | "Why am I a good match?" | `get_candidate_profile` → `analyze_match` |
 | "What skills am I missing?" | `get_candidate_profile` → `analyze_skill_gaps` |
 | "Create my 30-day plan" | `get_candidate_profile` → `create_career_plan` |
 | "Prepare me for an interview" | `get_candidate_profile` → `generate_interview_prep` |
 
-### Simulated Alexa+ Experience
-
-The `/agent` page demonstrates the Alexa+ experience:
-- Conversational agent interface
-- Real-time activity indicators showing MCP tool execution
-- Suggested prompts (voice-style interaction)
-- Voice input via browser Speech Recognition API (with graceful fallback)
-- Rich result panels for opportunities, match scores, skill gaps, and plans
+This makes the system an **agentic workflow**, rather than simply a conversational interface.
 
 ---
 
-## Amazon Bedrock
+# 🎙️ Simulated Alexa+ Experience
 
-CareerPilot uses Amazon Bedrock for AI reasoning and natural-language generation when AWS credentials and access to the selected model are configured.
+Because the hackathon permits a simulated Alexa+ experience, CareerPilot provides a web-based interface demonstrating the experience.
 
-- **SDK**: `@aws-sdk/client-bedrock-runtime`
-- **Default model**: `anthropic.claude-haiku-4-5-20251001-v1:0` (configurable using `BEDROCK_MODEL_ID`; availability depends on AWS region and account)
-- **Architecture**: Clean provider abstraction at `lib/ai/`
-- **Credentials**: Supplied through environment variables; no AWS credentials are hardcoded or returned to the client.
+The `/agent` page includes:
 
-### How Bedrock Is Used
+- Conversational agent interface
+- Voice-style interaction
+- Real-time activity indicators
+- MCP tool execution visibility
+- Suggested prompts
+- Opportunity result cards
+- Match explanations
+- Skill-gap analysis
+- Career plans
+- Interview preparation
 
-When AWS credentials are configured:
-```
+The interface demonstrates how an Alexa+-style agent could orchestrate career-related capabilities through MCP.
+
+---
+
+# ☁️ Amazon Bedrock
+
+CareerPilot uses **Amazon Bedrock** for AI reasoning and natural-language generation when AWS credentials and model access are configured.
+
+### Bedrock Integration
+
+- **SDK:** `@aws-sdk/client-bedrock-runtime`
+- **Default model:** `anthropic.claude-haiku-4-5-20251001-v1:0`
+- **Configuration:** `BEDROCK_MODEL_ID`
+- **Provider layer:** `lib/ai/`
+- **Credentials:** Supplied securely through the local AWS environment
+
+No AWS credentials are hardcoded into the application or exposed to the browser.
+
+### Request Flow
+
+```text
 User message
-    → Career Agent (intent detection + tool selection)
-    → MCP tools called (search, analyze, etc.)
-    → Tool results assembled into system context
-    → Amazon Bedrock (Claude via InvokeModel API) generates response
-    → Conversational response returned to user
+     ↓
+Career Agent
+     ↓
+Intent detection + tool selection
+     ↓
+MCP tools
+     ↓
+Candidate / opportunity / analysis results
+     ↓
+Amazon Bedrock
+     ↓
+Natural-language response
+     ↓
+CareerPilot UI
 ```
 
-### Required IAM Permissions
+### Required Permission
+
+The AWS identity running the application needs permission to invoke the selected Bedrock model.
+
+Example permission:
 
 ```json
 {
@@ -202,53 +278,102 @@ User message
 }
 ```
 
-### Transparent Fallback
-
-If Bedrock credentials are not configured, or a Bedrock generation request fails:
-- A deterministic fallback response is returned instead
-- The response identifies fallback mode as `CareerPilot Demo (Fallback — not Amazon Bedrock)`
-- The fallback uses structured templates for responses
-- The agent continues to return its MCP-derived career results alongside the fallback response when available
+> Model availability depends on the AWS account, region, and Bedrock access configuration.
 
 ---
 
-## Match Scoring Formula
+## 🔐 Recommended AWS Credential Setup
 
-The `analyze_match` tool uses a transparent, deterministic formula:
+For local development, prefer the AWS CLI/profile or another secure AWS credential provider rather than placing long-lived credentials directly in `.env.local`.
 
+For example:
+
+```bash
+aws configure
 ```
+
+Then configure:
+
+```text
+AWS_REGION=us-east-1
+BEDROCK_MODEL_ID=anthropic.claude-haiku-4-5-20251001-v1:0
+```
+
+If environment variables are used instead, never commit `.env.local` or real AWS credentials.
+
+**Never share AWS access keys in screenshots, GitHub, Devpost, or the demo video.**
+
+---
+
+## 🪂 Transparent Fallback
+
+CareerPilot remains demonstrable even when Bedrock is unavailable.
+
+If Bedrock credentials are not configured or a Bedrock request fails:
+
+- A deterministic fallback response is returned
+- The UI clearly identifies fallback mode
+- MCP-derived career results continue to be displayed
+- The application remains functional for demonstration
+
+Fallback responses are explicitly labeled:
+
+```text
+CareerPilot Demo (Fallback — not Amazon Bedrock)
+```
+
+This prevents the fallback system from being confused with Amazon Bedrock output.
+
+---
+
+# 📊 Match Scoring
+
+The `analyze_match` MCP tool uses a transparent deterministic scoring formula.
+
+```text
 skill_score    = (matched_required_skills / total_required_skills) × 50 pts
+
 location_score = location_match ? 20 : 5
+
 role_score     = (target_role_terms_matched / total_terms) × 20 pts
+
 project_score  = relevant_projects > 0 ? 10 : 0
+
 ─────────────────────────────────────────────
-Total (max): 100 pts (capped)
+
+Total: maximum 100 points
 ```
+
+The resulting score is accompanied by the factors contributing to the match, making the recommendation more explainable than a simple black-box percentage.
 
 ---
 
-## Tech Stack
+# 🛠️ Tech Stack
 
 | Layer | Technology |
-|-------|-----------|
+|---|---|
 | Frontend | Next.js 16, TypeScript, Tailwind CSS |
-| MCP Server | @modelcontextprotocol/sdk v1.32.1 |
-| MCP Transport | Streamable HTTP (2025-11-25) |
-| AI Provider | Amazon Bedrock (Claude Haiku 4.5 by default via bedrock-runtime) |
+| MCP Server | `@modelcontextprotocol/sdk` v1.32.1 |
+| MCP Transport | Streamable HTTP, MCP 2025-11-25 |
+| AI Provider | Amazon Bedrock via `bedrock-runtime` |
+| Default Model | Claude Haiku 4.5 |
 | Fallback AI | Deterministic response templates |
-| Runtime | Node.js v24 |
-| Data Layer | In-memory demo data (PostgreSQL-ready) |
+| Runtime | Node.js 20+ / tested on Node.js 24 |
+| Data Layer | In-memory demo data |
+| Animations | Framer Motion |
+| Voice | Browser Speech Recognition API |
 
 ---
 
-## Local Setup
+# 📦 Local Setup
 
-### Prerequisites
+## Prerequisites
 
-- Node.js 20+ (tested on v24)
+- Node.js 20+
 - npm 10+
+- AWS account with Amazon Bedrock access if testing Bedrock mode
 
-### Installation
+## Installation
 
 ```bash
 git clone <your-repo-url>
@@ -256,133 +381,270 @@ cd CareerPilot
 npm install
 ```
 
-### Environment Variables
+## Environment Configuration
+
+Copy the example environment file:
 
 ```bash
 cp .env.example .env.local
 ```
 
-Edit `.env.local`:
+Configure the MCP server:
 
 ```env
-# MCP server URL and listen port
 MCP_SERVER_URL=http://localhost:3001
 MCP_PORT=3001
+```
 
-# Optional — Amazon Bedrock (use credentials configured securely for your environment)
+For Bedrock:
+
+```env
 AWS_REGION=us-east-1
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
 BEDROCK_MODEL_ID=anthropic.claude-haiku-4-5-20251001-v1:0
 ```
 
-Set AWS credentials using a secure local method; never commit `.env.local` or real AWS credentials. Without Bedrock credentials, the app runs in a clearly identified deterministic fallback mode. The selected model must be enabled for your AWS account and region.
+If your environment requires explicit AWS credentials, configure them securely through your AWS credential provider. Do not commit credentials to the repository.
 
 ---
 
-## Running the Application
+# ▶️ Running the Application
 
-### Terminal 1 — Start the MCP Server
+## Terminal 1 — Start MCP Server
 
 ```bash
 npm run mcp
 ```
 
 Expected output:
-```
+
+```text
 ╔══════════════════════════════════════════════════╗
 ║         CareerPilot MCP Server v1.0.0            ║
 ║  Protocol: MCP 2025-11-25 (Streamable HTTP)      ║
 ╠══════════════════════════════════════════════════╣
-║  MCP endpoint:  http://localhost:3001/mcp         ║
-║  Health check:  http://localhost:3001/health      ║
+║  MCP endpoint:  http://localhost:3001/mcp        ║
+║  Health check:  http://localhost:3001/health     ║
 ╚══════════════════════════════════════════════════╝
 ```
 
-### Terminal 2 — Start the Next.js Frontend
+## Terminal 2 — Start Next.js
 
 ```bash
 npm run dev
 ```
 
-Open http://localhost:3000
+Open:
 
-### MCP verification
-
-With Terminal 1's MCP server running:
-
-```bash
-npm run test
+```text
+http://localhost:3000
 ```
 
-This runs the tool unit tests and MCP HTTP smoke test. The smoke test executes the protocol workflow: `initialize` → session creation → `notifications/initialized` → `tools/list` → `tools/call`. It checks all six tools and session error cases. For a protocol-only run use `npm run test:mcp`; to run only tool unit tests use `npm run test:unit`.
+---
 
-The MCP client must complete initialization and use the returned session ID before listing or calling tools. A standalone `tools/call` request without that handshake is not a valid way to test this server.
+# 🧪 Testing
+
+Run the complete test suite:
+
+```bash
+npm test
+```
+
+Run the MCP protocol tests:
+
+```bash
+npm run test:mcp
+```
+
+Run unit tests only:
+
+```bash
+npm run test:unit
+```
+
+The MCP smoke test verifies the protocol workflow:
+
+```text
+initialize
+    ↓
+session creation
+    ↓
+notifications/initialized
+    ↓
+tools/list
+    ↓
+tools/call
+```
+
+It verifies the registered MCP tools and session error cases.
+
+> A standalone `tools/call` request without first completing the MCP initialization handshake is not a valid MCP client workflow.
 
 ---
 
-## Demo Flow
+# 🎬 Demo Flow
 
-The demo flow:
+A recommended demonstration flow:
 
-1. **Open** http://localhost:3000 — show the public landing page.
-2. Select **Login** and register a local demo account using the three-step form, or sign in with an existing account.
-3. Confirm registration/sign-in opens that account's dashboard and the top navigation offers Dashboard, AI Agent, Opportunities, Profile, and Sign out.
-4. Open AI Agent and type: "I want an AI/ML internship in Hyderabad."
-5. Watch the activity panel for the real MCP tools selected for the request.
-6. Review the returned opportunities, match analysis, and skill gaps. Results vary with the candidate profile and requested criteria.
-7. Ask for a career plan and interview preparation, and review the generated results.
-8. Open Opportunities and Profile to demonstrate the signed-in account context, then sign out.
+1. Open the CareerPilot landing page.
+2. Register or sign in using the local demo account.
+3. Show the dashboard and candidate profile.
+4. Open **AI Agent**.
+5. Enter:
 
----
+   > **"I want an AI/ML internship in Hyderabad."**
 
-## Environment Variables
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `MCP_SERVER_URL` | No | MCP server URL (default: http://localhost:3001) |
-| `MCP_PORT` | No | MCP server port (default: 3001) |
-| `AWS_REGION` | For Bedrock | AWS region (e.g., us-east-1) |
-| `AWS_ACCESS_KEY_ID` | For Bedrock | AWS access key |
-| `AWS_SECRET_ACCESS_KEY` | For Bedrock | AWS secret key |
-| `BEDROCK_MODEL_ID` | No | Bedrock model ID (default: `anthropic.claude-haiku-4-5-20251001-v1:0`; availability depends on the configured region/account) |
+6. Show the agent activity panel and MCP tools being selected.
+7. Show the returned opportunities.
+8. Open the match explanation.
+9. Show the candidate's skill gaps.
+10. Ask CareerPilot to create a 30-day plan.
+11. Ask for interview preparation.
+12. Briefly show the MCP architecture and Amazon Bedrock integration.
+13. Close with the CareerPilot value proposition.
 
 ---
 
-## Hackathon Track
 
-**Primary Track**: Alexa+
-- ✓ Self-hosted MCP server
-- ✓ Official @modelcontextprotocol/sdk
-- ✓ MCP 2025-11-25 protocol
-- ✓ Streamable HTTP transport
-- ✓ 6 MCP tools registered and used
-- ✓ Agent actually calls MCP tools
-- ✓ Simulated Alexa+ web experience
+# 🏆 Hackathon Submission
 
-**AWS Builder Mini Challenge**
-- ✓ Amazon Bedrock integration (@aws-sdk/client-bedrock-runtime)
-- ✓ Environment variable configuration (no hardcoded credentials)
-- ✓ Transparent fallback clearly labeled as non-Bedrock
-- ✓ Clean AI provider abstraction enabling easy Bedrock activation
+## Amazon Developer Hackathon: Build, Ship, Shape 2026
+
+### Primary Track
+
+**Alexa+**
+
+CareerPilot demonstrates a simulated Alexa+ experience backed by a real self-hosted MCP server.
+
+Implemented:
+
+- ✅ Self-hosted MCP server
+- ✅ Official `@modelcontextprotocol/sdk`
+- ✅ MCP 2025-11-25
+- ✅ Streamable HTTP transport
+- ✅ `POST /mcp` endpoint
+- ✅ MCP session initialization
+- ✅ Six registered MCP tools
+- ✅ Career Agent that actually invokes MCP tools
+- ✅ Web-based simulated Alexa+ experience
+
+### AWS Builder Mini Challenge
+
+CareerPilot integrates **Amazon Bedrock** as its AI provider.
+
+Implemented:
+
+- ✅ Amazon Bedrock integration
+- ✅ `@aws-sdk/client-bedrock-runtime`
+- ✅ Configurable Bedrock model
+- ✅ Secure credential configuration
+- ✅ AI provider abstraction
+- ✅ Clearly identified non-Bedrock fallback mode
 
 ---
 
-## Limitations
+# 🧩 Why MCP Matters in CareerPilot
 
-- **Local demo account storage**: Registered account/profile data is persisted in the git-ignored `.careerpilot-auth.json` file on the local server. It is not multi-instance or production-ready authentication/storage. Updates to built-in demo profiles are in-memory and reset on server restart.
-- **No real job scraping**: Opportunity data is a realistic demo dataset. Real job APIs (LinkedIn, Naukri) could be integrated as MCP tools.
-- **Fallback mode**: Without Bedrock credentials, AI responses are deterministic templates rather than LLM-generated.
-- **Voice input**: Speech Recognition is browser-dependent and not supported in all environments.
+MCP provides a structured interface between the Career Agent and career capabilities.
+
+Instead of putting every career operation directly inside the conversational layer, CareerPilot exposes reusable tools:
+
+```text
+Career Agent
+     │
+     ├── get_candidate_profile
+     ├── search_opportunities
+     ├── analyze_match
+     ├── analyze_skill_gaps
+     ├── create_career_plan
+     └── generate_interview_prep
+```
+
+This makes the architecture extensible.
+
+Additional career capabilities can be added as MCP tools without redesigning the entire agent experience.
 
 ---
 
-## Future Improvements
+# 📁 Project Structure
 
-- PostgreSQL integration for profile persistence
-- Real-time job scraping via additional MCP tools
-- Application tracking with status updates
-- Email/calendar integration for deadline reminders
-- Resume parser MCP tool
-- Production authentication and managed multi-instance storage
-- Analytics dashboard for career progress over time
+```text
+CareerPilot/
+│
+├── app/                    # Next.js application routes and pages
+├── lib/
+│   ├── agent/              # Career Agent logic
+│   ├── ai/                 # Bedrock + fallback providers
+│   └── data/               # Demo opportunities and candidates
+│
+├── mcp/
+│   └── server.ts           # Self-hosted MCP server
+│
+├── public/
+│   └── images/
+│       └── career/         # Career illustration assets
+│
+├── .env.example
+├── .gitignore
+├── LICENSE
+├── package.json
+└── README.md
+```
+
+---
+
+# ⚠️ Limitations
+
+- **Local demo authentication:** Account/profile data is stored in the git-ignored `.careerpilot-auth.json` file and is not production-ready authentication.
+- **Demo opportunity data:** Opportunities are based on a realistic local dataset rather than live job-market APIs.
+- **Fallback AI:** Without Bedrock credentials, responses use deterministic templates.
+- **Voice input:** Browser Speech Recognition support varies by browser/environment.
+- **Single-instance storage:** The current local data layer is intended for demonstration rather than production-scale deployment.
+
+---
+
+# 🔮 Future Improvements
+
+- PostgreSQL-backed profile persistence
+- Real-time job APIs through additional MCP tools
+- Application tracking and status updates
+- Email/calendar integrations for application deadlines
+- Resume parsing MCP tool
+- Production authentication
+- Managed multi-instance storage
+- Career progress analytics
+- Additional agent capabilities and MCP integrations
+
+---
+
+# 📄 License
+
+This project is licensed under the **MIT License**.
+
+See [`LICENSE`](./LICENSE) for details.
+
+---
+
+# 👥 Hackathon Submission Links
+
+**GitHub Repository:**  
+`https://github.com/rithikanagineni/CareerPilot`
+
+**Demo Video:**  
+_Add public YouTube/Vimeo link before submission._
+
+**Hackathon:**  
+Amazon Developer Hackathon — Build, Ship, Shape 2026
+
+**Primary Track:** Alexa+
+
+**Mini Challenge:** AWS Builder
+
+---
+
+# 🙌 Built for the Hackathon
+
+CareerPilot was built to explore how an agentic career assistant can combine **MCP, Amazon Bedrock, structured tools, and an Alexa+-style experience** into one practical workflow.
+
+> **Don't just find your next opportunity. Know why it fits, what you're missing, and what to do next.**
+
+**CareerPilot — Turn career goals into your next best action.**
